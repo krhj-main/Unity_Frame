@@ -11,8 +11,6 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-        
 
         int randValue = Random.Range(0, 10);
 
@@ -45,5 +43,6 @@ public class Enemy : MonoBehaviour
         GameObject fx = Instantiate(effect,transform.position,transform.rotation);
         Destroy(fx,1f);
         Destroy(this.gameObject);
+        ScoreUI.Instance.CurrentScore += 10;
     }
 }
