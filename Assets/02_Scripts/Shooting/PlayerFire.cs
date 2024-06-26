@@ -25,6 +25,11 @@ public class PlayerFire : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+#if UNITY_ANDROID
+        GameObject.Find("Joystick canvas XYBZ").SetActive(true);
+#elif UNITY_EDITOR || UNITY_STANDALONE
+        GameObject.Find("Joystick canvas XYBZ").SetActive(false);
+
         bulletObjectPool = new GameObject[poolSize];
         bulletListPool = new List<GameObject>();
 
@@ -47,13 +52,21 @@ public class PlayerFire : MonoBehaviour
             // 저장된 오브젝트풀에서 배열마다 비활성화해둔다.
         }
         */
+# endif
     }
 
     // Update is called once per frame
     void Update()
     {
+#if UNITY_EDITOR || UNITY_STANDALONE
+        Fire();
+
+#endif
+    }
+    public void Fire()
+    {
         // 발사 버튼을 클릭하면
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetButtonDown("Fire1"))
         {
             if (bulletListPool.Count > 0)
             {
@@ -85,5 +98,7 @@ public class PlayerFire : MonoBehaviour
             }
             */
         }
+
+
     }
 }
