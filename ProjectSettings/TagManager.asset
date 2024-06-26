@@ -6,6 +6,7 @@ TagManager:
   tags:
   - FxTemporaire
   - Background
+  - Bullet
   layers:
   - Default
   - TransparentFX

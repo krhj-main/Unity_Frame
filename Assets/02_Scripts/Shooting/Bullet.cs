@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(gameObject,3f);   
+        
     }
 
     // Update is called once per frame
@@ -17,5 +17,15 @@ public class Bullet : MonoBehaviour
         Vector3 dir = Vector3.up;
 
         transform.position += dir * speed * Time.deltaTime;
+        
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer("DestroyZone"))
+        {
+            this.gameObject.SetActive(false);
+            PlayerFire player = GameObject.Find("Player").GetComponent<PlayerFire>();
+            player.bulletListPool.Add(gameObject);
+        }
     }
 }

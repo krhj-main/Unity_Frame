@@ -38,11 +38,38 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.layer != LayerMask.NameToLayer("DestroyZone"))
         {
-            Destroy(collision.gameObject);
+            this.gameObject.SetActive(false);
+            EnemyManager my = GameObject.Find("EnemySpawner").GetComponent<EnemyManager>();
+            my.enemyListPool.Add(this.gameObject);
         }
-        GameObject fx = Instantiate(effect,transform.position,transform.rotation);
-        Destroy(fx,1f);
-        Destroy(this.gameObject);
+        else if (collision.gameObject.layer == LayerMask.NameToLayer("DestroyZone"))
+        {
+            this.gameObject.SetActive(false);
+            EnemyManager my = GameObject.Find("EnemySpawner").GetComponent<EnemyManager>();
+            my.enemyListPool.Add(this.gameObject);
+        }
+
+        /*
+        if (collision.gameObject.layer == LayerMask.NameToLayer("PlayerBullet"))
+        {
+            collision.gameObject.SetActive(false);
+        }
+        */
+        if (collision.gameObject.tag == "Bullet")
+        {
+            collision.gameObject.SetActive(false);
+
+            PlayerFire player = GameObject.Find("Player").GetComponent<PlayerFire>();
+            player.bulletListPool.Add(collision.gameObject);
+            //collision.gameObject.SetActive(false);
+        }
+        else if(collision.gameObject.tag == "Player")
+        {
+            collision.gameObject.SetActive(false);
+            //Destroy(this.gameObject);
+        }
+        GameObject fx = Instantiate(effect, transform.position, transform.rotation);
+        Destroy(fx, 0.5f);
         ScoreUI.Instance.CurrentScore += 10;
     }
 }
